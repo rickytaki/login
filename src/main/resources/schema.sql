@@ -1,0 +1,17 @@
+DROP TABLE IF EXISTS user_info;
+DROP TABLE IF EXISTS address;
+
+CREATE TABLE user_info (
+  email VARCHAR(128) NOT NULL PRIMARY KEY ,
+  name VARCHAR(128) NOT NULL ,
+  age INTEGER,
+  password VARCHAR(128) NOT NULL
+);
+
+CREATE TABLE address (
+  id SERIAL PRIMARY KEY ,
+  street VARCHAR(128) NOT NULL,
+  number INTEGER NOT NULL,
+  zip_code INTEGER,
+  email VARCHAR(128) REFERENCES user_info (email)
+);

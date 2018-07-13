@@ -1,0 +1,2 @@
+insert into user_info(email, name, age, password) VALUES ('test@test.com', 'test', 12, 'test123');
+insert into address(street, number, zip_code, email) VALUES ('Rua test', 12, 012315, 'test@test.com');
