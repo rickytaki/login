@@ -3,7 +3,7 @@ package com.rickytaki.login.service;
 import com.rickytaki.login.dao.AddressDao;
 import com.rickytaki.login.dao.UserInfoDao;
 import com.rickytaki.login.model.UserInfo;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,18 +11,19 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.validation.constraints.NotNull;
 
 @Service
+@AllArgsConstructor
 public class UserInfoService {
 
-    @Autowired
-    private UserInfoDao userInfoDao;
+    @NotNull
+    private final UserInfoDao userInfoDao;
 
-    @Autowired
-    private AddressDao addressDao;
+    @NotNull
+    private final AddressDao addressDao;
 
     @Transactional
     public void save (@NotNull UserInfo userInfo) {
         userInfoDao.save(userInfo);
-        addressDao.save(userInfo.getAddress());
+        addressDao.save(userInfo);
     }
 
     @Cacheable(value = "userCache", key = "#name")

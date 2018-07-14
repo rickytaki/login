@@ -2,18 +2,20 @@ package com.rickytaki.login.dao;
 
 import com.rickytaki.login.model.Address;
 import com.rickytaki.login.model.UserInfo;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import javax.validation.constraints.NotNull;
 import java.sql.ResultSet;
 import java.util.Optional;
 
 @Repository
+@AllArgsConstructor
 public class UserInfoDaoImpl implements UserInfoDao {
 
-    @Autowired
-    JdbcTemplate jdbcTemplate ;
+    @NotNull
+    private final JdbcTemplate jdbcTemplate ;
 
     @Override
     public void save(UserInfo userInfo) {
