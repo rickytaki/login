@@ -16,10 +16,10 @@ public class AddressDaoImpl implements AddressDao {
     private final JdbcTemplate jdbcTemplate;
 
     @Override
-    public void save(UserInfo user) {
-        Address address = user.getAddress();
+    public void save(Address address) {
+
         String query = "INSERT INTO address(email, street, number, zip_code) VALUES (?,?,?,?)";
-        jdbcTemplate.update(query, user.getEmail(), address.getStreet(), address.getNumber(), address.getZipCode());
+        jdbcTemplate.update(query, address.getEmail(), address.getStreet(), address.getNumber(), address.getZipCode());
     }
 
 

@@ -40,9 +40,6 @@ public class UserInfoControllerTest {
     @Autowired
     MockMvc mvc;
 
-    @Autowired
-    private WebApplicationContext webApplicationContext;
-
     private ObjectMapper jsonMapper = new ObjectMapper();
 
     private UserInfoController controller;
@@ -55,11 +52,6 @@ public class UserInfoControllerTest {
     @Before
     public void init(){
         this.controller = new UserInfoController(service);
-
-        mvc = MockMvcBuilders
-                .webAppContextSetup(webApplicationContext)
-                .apply(springSecurity())
-                .build();
 
         user = new UserInfo();
         user.setEmail("controller@controller.com");

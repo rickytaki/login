@@ -44,6 +44,8 @@ public class UserInfoServiceTest {
 
     private UserInfo user;
 
+    private Address address;
+
     private UserInfoResponse userResponse;
 
     private AddressResponse addressResponse;
@@ -57,7 +59,7 @@ public class UserInfoServiceTest {
         user.setName("testing");
         user.setAge(22);
         user.setEmail("testing@testing.com");
-        Address address = new Address();
+        address = new Address();
         address.setZipCode("010101010");
         address.setNumber(22);
         address.setStreet("Testing street");
@@ -83,12 +85,12 @@ public class UserInfoServiceTest {
     @Test
     public void shouldCreateNewUser() {
         doNothing().when(dao).save(user);
-        doNothing().when(addressDao).save(user);
+        doNothing().when(addressDao).save(address);
         when(encoder.encode(user.getPassword())).thenReturn(user.getPassword());
         service.save(user);
 
         verify(dao, times(1)).save(user);
-        verify(addressDao, times(1)).save(user);
+        verify(addressDao, times(1)).save(address);
     }
 
     @Test

@@ -75,6 +75,8 @@ public class LoginAppIT {
         UserInfoResponse foundUser = restTemplate.withBasicAuth("madruguinha@login.com", "madruguinha@123")
                 .getForObject("/findByName/madruguinha", UserInfoResponse.class);
 
+        System.out.println(foundUser);
+
         Assert.assertEquals(foundUser.getAddress().getStreet(), "Vila Chaves");
         Assert.assertEquals(foundUser.getEmail(), "madruguinha@login.com");
 

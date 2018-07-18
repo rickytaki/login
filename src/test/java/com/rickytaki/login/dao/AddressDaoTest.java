@@ -35,12 +35,13 @@ public class AddressDaoTest {
         UserInfo user = new UserInfo();
         user.setEmail("addressTest@addressTest.com");
         Address address = new Address();
+        address.setEmail(user.getEmail());
         address.setZipCode("123123");
         address.setStreet("TestAdress street");
         address.setNumber(123);
         user.setAddress(address);
 
-        dao.save(user);
+        dao.save(address);
 
         Address found = jdbcTemplate.queryForObject("SELECT * FROM address WHERE email = ?", (ResultSet rs, int rowNumber) -> {
             Address ad = new Address();

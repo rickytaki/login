@@ -2,6 +2,7 @@ package com.rickytaki.login.service;
 
 import com.rickytaki.login.dao.AddressDao;
 import com.rickytaki.login.dao.UserInfoDao;
+import com.rickytaki.login.model.Address;
 import com.rickytaki.login.model.UserInfo;
 import com.rickytaki.login.response.UserInfoResponse;
 import lombok.AllArgsConstructor;
@@ -39,7 +40,9 @@ public class UserInfoService implements UserDetailsService {
         String encoded = encoder.encode(userInfo.getPassword());
         userInfo.setPassword(encoded);
         userInfoDao.save(userInfo);
-        addressDao.save(userInfo);
+        Address address = userInfo.getAddress();
+        address.setEmail(userInfo.getEmail());
+        addressDao.save(address);
     }
 
     @Cacheable(value = "byName", key = "#name")
