@@ -44,4 +44,9 @@ public class UserInfoDaoTest {
         Assert.assertEquals("test", dao.findByName("test").get().getName());
     }
 
+    @Test
+    public void shouldGetByEmail() {
+        Assert.assertEquals("test", dao.findByEmail("test@test.com").get().getName());
+    }
+
 }

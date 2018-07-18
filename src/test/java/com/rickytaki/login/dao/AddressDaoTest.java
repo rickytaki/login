@@ -1,6 +1,7 @@
 package com.rickytaki.login.dao;
 
 import com.rickytaki.login.model.Address;
+import com.rickytaki.login.model.UserInfo;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +18,6 @@ import java.sql.ResultSet;
 @RunWith(SpringRunner.class)
 @PropertySource("application-test.properties")
 @JdbcTest
-@Sql(scripts = {"classpath:schema.sql", "classpath:addressData.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @ContextConfiguration(classes = {AddressDaoImpl.class})
 public class AddressDaoTest {
 
@@ -28,25 +28,29 @@ public class AddressDaoTest {
     JdbcTemplate jdbcTemplate;
 
     @Test
+    @Sql(scripts = {"classpath:schema.sql", "classpath:addressData.sql"},
+            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     public void WhenNotNull_ShouldSaveAndRetrieve () {
 
+        UserInfo user = new UserInfo();
+        user.setEmail("addressTest@addressTest.com");
         Address address = new Address();
-        address.setZipCode(123123);
+        address.setZipCode("123123");
         address.setStreet("TestAdress street");
         address.setNumber(123);
-        address.setEmail("addressTest@addressTest.com");
+        user.setAddress(address);
 
-        dao.save(address);
+        dao.save(user);
 
         Address found = jdbcTemplate.queryForObject("SELECT * FROM address WHERE email = ?", (ResultSet rs, int rowNumber) -> {
             Address ad = new Address();
             ad.setEmail(rs.getString("email"));
             ad.setNumber(rs.getInt("number"));
             ad.setStreet(rs.getString("street"));
-            ad.setZipCode(rs.getInt("zip_code"));
+            ad.setZipCode(rs.getString("zip_code"));
 
             return ad;
-        }, address.getEmail());
+        }, user.getEmail());
         Assert.assertEquals(address.getStreet(), found.getStreet());
     }
 }

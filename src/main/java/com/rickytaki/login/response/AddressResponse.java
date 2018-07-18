@@ -1,13 +1,12 @@
-package com.rickytaki.login.model;
+package com.rickytaki.login.response;
 
 import lombok.Data;
 
 import java.io.Serializable;
 
 @Data
-public class Address implements Serializable {
+public class AddressResponse implements Serializable {
 
-    private String email;
     private String street;
     private int number;
     private String zipCode;

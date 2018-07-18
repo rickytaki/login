@@ -12,6 +12,6 @@ CREATE TABLE address (
   id SERIAL PRIMARY KEY ,
   street VARCHAR(128) NOT NULL,
   number INTEGER NOT NULL,
-  zip_code INTEGER,
+  zip_code VARCHAR(20),
   email VARCHAR(128) REFERENCES user_info (email)
 );
