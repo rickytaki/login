@@ -7,7 +7,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import javax.validation.constraints.NotNull;
 import java.sql.ResultSet;
 import java.util.Optional;
 
@@ -15,7 +14,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UserInfoDaoImpl implements UserInfoDao {
 
-    @NotNull
+
     private final JdbcTemplate jdbcTemplate ;
 
     @Override

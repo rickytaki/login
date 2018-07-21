@@ -50,6 +50,9 @@ public class LoginAppIT {
     }
 
     @Test
+    @Sql(scripts = "classpath:schema.sql",
+            config = @SqlConfig(transactionMode = ISOLATED),
+            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:finalize.sql",
             config = @SqlConfig(transactionMode = ISOLATED),
             executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
@@ -74,8 +77,6 @@ public class LoginAppIT {
 
         UserInfoResponse foundUser = restTemplate.withBasicAuth("madruguinha@login.com", "madruguinha@123")
                 .getForObject("/findByName/madruguinha", UserInfoResponse.class);
-
-        System.out.println(foundUser);
 
         Assert.assertEquals(foundUser.getAddress().getStreet(), "Vila Chaves");
         Assert.assertEquals(foundUser.getEmail(), "madruguinha@login.com");

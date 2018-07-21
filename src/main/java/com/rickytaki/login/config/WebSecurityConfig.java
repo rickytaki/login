@@ -1,6 +1,6 @@
 package com.rickytaki.login.config;
 
-import com.rickytaki.login.service.UserInfoService;
+import com.rickytaki.login.security.UserDetailsServiceCustom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +20,7 @@ import org.springframework.web.cors.CorsUtils;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserInfoService service;
+    private UserDetailsServiceCustom service;
 
     @Override
     public void configure(WebSecurity web) throws Exception {

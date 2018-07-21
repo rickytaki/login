@@ -15,8 +15,6 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -126,20 +124,5 @@ public class UserInfoServiceTest {
         exceptionRule.expectMessage("User arlindo@arlindo.com Not Found");
         service.findByEmail("arlindo@arlindo.com");
     }
-
-    @Test
-    public void whenNotNull_LoadUser_ShouldReturnUserDetails() {
-        when(dao.findByEmail("testing@testing.com")).thenReturn(Optional.of(user));
-        UserDetails found = service.loadUserByUsername(user.getEmail());
-
-        Assert.assertEquals(user.getEmail(), found.getUsername());
-        verify(dao).findByEmail(user.getEmail());
-    }
-
-    @Test
-    public void whenLoadUserNotFound_ShouldReturnExceptionAndMEssage() {
-        exceptionRule.expect(UsernameNotFoundException.class);
-        exceptionRule.expectMessage("User arlindo@arlindo.com not found");
-        service.loadUserByUsername("arlindo@arlindo.com");
-    }
 }
+

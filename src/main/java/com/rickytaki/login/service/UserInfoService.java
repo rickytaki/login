@@ -10,9 +10,6 @@ import lombok.NonNull;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +18,7 @@ import javax.validation.constraints.NotNull;
 
 @Service
 @AllArgsConstructor
-public class UserInfoService implements UserDetailsService {
+public class UserInfoService {
 
     @NonNull
     private final UserInfoDao userInfoDao;
@@ -61,12 +58,5 @@ public class UserInfoService implements UserDetailsService {
         return userInfoDao.findByEmail(email)
                 .map(user -> mapper.map(user, UserInfoResponse.class))
                 .orElseThrow(() -> new RuntimeException("User " + email + " Not Found"));
-    }
-
-    @Override
-    @Cacheable(value = "login", key = "#s")
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return userInfoDao.findByEmail(s).
-                orElseThrow(() -> new UsernameNotFoundException("User " + s + " not found"));
     }
 }

@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS user_info;
 DROP TABLE IF EXISTS address;
+DROP TABLE IF EXISTS user_info;
 
 CREATE TABLE user_info (
   email VARCHAR(128) NOT NULL PRIMARY KEY ,
