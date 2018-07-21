@@ -28,6 +28,9 @@ public class UserInfoDaoTest {
         user.setAge(22);
         user.setEmail("testing@testing.com");
         user.setPassword("testPass");
+        user.setStreet("Street Test");
+        user.setNumber(22);
+        user.setZipCode("01002622");
 
         dao.save(user);
 

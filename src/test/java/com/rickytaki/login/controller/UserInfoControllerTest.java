@@ -1,7 +1,6 @@
 package com.rickytaki.login.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rickytaki.login.model.Address;
 import com.rickytaki.login.model.UserInfo;
 import com.rickytaki.login.response.UserInfoResponse;
 import com.rickytaki.login.service.UserInfoService;
@@ -17,14 +16,11 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import static org.hamcrest.core.StringContains.containsString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -59,11 +55,9 @@ public class UserInfoControllerTest {
         user.setAge(33);
         user.setName("controller");
 
-        Address address = new Address();
-        address.setZipCode("333333");
-        address.setStreet("Controller St");
-        address.setNumber(33);
-        user.setAddress(address);
+        user.setZipCode("333333");
+        user.setStreet("Controller St");
+        user.setNumber(33);
     }
 
     @Test

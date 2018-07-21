@@ -11,7 +11,8 @@ public class UserInfo implements Serializable {
     private String name;
     private String password;
     private int age;
-    private Address address;
-
+    private String street;
+    private int number;
+    private String zipCode;
 
 }

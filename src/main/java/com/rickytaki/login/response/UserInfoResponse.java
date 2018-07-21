@@ -10,5 +10,7 @@ public class UserInfoResponse implements Serializable {
     private String email;
     private String name;
     private int age;
-    private AddressResponse address;
+    private String street;
+    private int number;
+    private String zipCode;
 }

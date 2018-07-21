@@ -1,10 +1,7 @@
 package com.rickytaki.login.service;
 
-import com.rickytaki.login.dao.AddressDao;
 import com.rickytaki.login.dao.UserInfoDao;
-import com.rickytaki.login.model.Address;
 import com.rickytaki.login.model.UserInfo;
-import com.rickytaki.login.response.AddressResponse;
 import com.rickytaki.login.response.UserInfoResponse;
 import ma.glasnost.orika.MapperFacade;
 import org.junit.Assert;
@@ -29,9 +26,6 @@ public class UserInfoServiceTest {
     private UserInfoDao dao;
 
     @Mock
-    private AddressDao addressDao;
-
-    @Mock
     private BCryptPasswordEncoder encoder;
 
     @Mock(name = "map")
@@ -42,11 +36,7 @@ public class UserInfoServiceTest {
 
     private UserInfo user;
 
-    private Address address;
-
     private UserInfoResponse userResponse;
-
-    private AddressResponse addressResponse;
 
     @Rule
     public ExpectedException exceptionRule = ExpectedException.none();
@@ -57,23 +47,19 @@ public class UserInfoServiceTest {
         user.setName("testing");
         user.setAge(22);
         user.setEmail("testing@testing.com");
-        address = new Address();
-        address.setZipCode("010101010");
-        address.setNumber(22);
-        address.setStreet("Testing street");
-        user.setAddress(address);
+        user.setZipCode("010101010");
+        user.setNumber(22);
+        user.setStreet("Testing street");
 
-        addressResponse = new AddressResponse();
-        AddressResponse addressResponse = new AddressResponse();
-        addressResponse.setNumber(address.getNumber());
-        addressResponse.setStreet(address.getStreet());
-        addressResponse.setZipCode(address.getZipCode());
+
 
         userResponse = new UserInfoResponse();
-        userResponse.setAddress(addressResponse);
         userResponse.setName(user.getName());
         userResponse.setAge(user.getAge());
         userResponse.setEmail(user.getEmail());
+        userResponse.setNumber(user.getNumber());
+        userResponse.setStreet(user.getStreet());
+        userResponse.setZipCode(user.getZipCode());
     }
 
     public void finalize() {
@@ -83,12 +69,10 @@ public class UserInfoServiceTest {
     @Test
     public void shouldCreateNewUser() {
         doNothing().when(dao).save(user);
-        doNothing().when(addressDao).save(address);
         when(encoder.encode(user.getPassword())).thenReturn(user.getPassword());
         service.save(user);
 
         verify(dao, times(1)).save(user);
-        verify(addressDao, times(1)).save(address);
     }
 
     @Test
@@ -97,7 +81,7 @@ public class UserInfoServiceTest {
         when(mapper.map(any(), any())).thenReturn(userResponse);
         UserInfoResponse found = service.findByName(user.getName());
 
-        Assert.assertEquals(user.getAddress().getStreet(), found.getAddress().getStreet());
+        Assert.assertEquals(user.getStreet(), found.getStreet());
         verify(dao).findByName(user.getName());
     }
 
@@ -114,7 +98,7 @@ public class UserInfoServiceTest {
         when(mapper.map(any(), any())).thenReturn(userResponse);
         UserInfoResponse found = service.findByEmail(user.getEmail());
 
-        Assert.assertEquals(user.getAddress().getStreet(), found.getAddress().getStreet());
+        Assert.assertEquals(user.getStreet(), found.getStreet());
         verify(dao).findByEmail(user.getEmail());
     }
 

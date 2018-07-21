@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rickytaki.login.LoginApplication;
 import com.rickytaki.login.config.WebSecurityConfig;
-import com.rickytaki.login.model.Address;
 import com.rickytaki.login.model.UserInfo;
 import com.rickytaki.login.response.UserInfoResponse;
 import org.junit.Assert;
@@ -36,17 +35,15 @@ public class LoginAppIT {
 
     @Before
     public void init() {
+
         user = new UserInfo();
         user.setEmail("ittest@controller.com");
         user.setPassword("itTest123");
         user.setAge(44);
         user.setName("itTest");
-
-        Address address = new Address();
-        address.setZipCode("44444");
-        address.setStreet("ItTest St");
-        address.setNumber(44);
-        user.setAddress(address);
+        user.setZipCode("44444");
+        user.setStreet("ItTest St");
+        user.setNumber(44);
     }
 
     @Test
@@ -78,7 +75,7 @@ public class LoginAppIT {
         UserInfoResponse foundUser = restTemplate.withBasicAuth("madruguinha@login.com", "madruguinha@123")
                 .getForObject("/findByName/madruguinha", UserInfoResponse.class);
 
-        Assert.assertEquals(foundUser.getAddress().getStreet(), "Vila Chaves");
+        Assert.assertEquals(foundUser.getStreet(), "Vila Chaves");
         Assert.assertEquals(foundUser.getEmail(), "madruguinha@login.com");
 
     }
@@ -95,7 +92,7 @@ public class LoginAppIT {
         UserInfoResponse foundUser = restTemplate.withBasicAuth("madruguinha@login.com", "madruguinha@123")
                 .getForObject("/findByEmail/madruguinha@login.com", UserInfoResponse.class);
 
-        Assert.assertEquals(foundUser.getAddress().getStreet(), "Vila Chaves");
+        Assert.assertEquals(foundUser.getStreet(), "Vila Chaves");
         Assert.assertEquals(foundUser.getEmail(), "madruguinha@login.com");
 
     }

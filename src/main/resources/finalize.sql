@@ -1,1 +1,1 @@
-TRUNCATE user_info, address;
+TRUNCATE user_info;
