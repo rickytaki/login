@@ -40,16 +40,15 @@ public class UserInfoControllerTest {
 
     private UserInfoController controller;
 
-    @Autowired
-    private MapperFacade mapper;
-
     private UserInfo user;
+
+    private UserInfoResponse response;
 
     @Before
     public void init(){
         this.controller = new UserInfoController(service);
 
-        user = new UserInfo();
+        this.user = new UserInfo();
         user.setEmail("controller@controller.com");
         user.setPassword("controller123");
         user.setAge(33);
@@ -58,6 +57,14 @@ public class UserInfoControllerTest {
         user.setZipCode("333333");
         user.setStreet("Controller St");
         user.setNumber(33);
+
+        this.response = new UserInfoResponse();
+        response.setEmail(user.getEmail());
+        response.setAge(user.getAge());
+        response.setName(user.getName());
+        response.setStreet(user.getStreet());
+        response.setNumber(user.getNumber());
+        response.setZipCode(user.getZipCode());;
     }
 
     @Test
@@ -75,7 +82,7 @@ public class UserInfoControllerTest {
     @Test
     @WithMockUser
     public void givenUser_FindByName_ShouldRetrieve() throws Exception{
-        when(service.findByName(user.getName())).thenReturn(mapper.map(user, UserInfoResponse.class));
+        when(service.findByName(user.getName())).thenReturn(response);
         mvc.perform(get("/findByName/controller"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -86,7 +93,7 @@ public class UserInfoControllerTest {
     @Test
     @WithMockUser
     public void givenUser_FindByEmail_ShouldRetrieve() throws Exception{
-        when(service.findByEmail(user.getEmail())).thenReturn(mapper.map(user, UserInfoResponse.class));
+        when(service.findByEmail(user.getEmail())).thenReturn(response);
         mvc.perform(get("/findByEmail/controller@controller.com"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("controller")));
